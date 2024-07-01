@@ -1,0 +1,70 @@
+#include <iostream>
+using namespace std;
+
+struct Node{
+    int data;
+    struct Node *next;
+} *first = NULL;
+
+void create(int A[], int n){
+    int i;
+    struct Node *t, *last;
+    first = new Node;
+    first->data = A[0];
+    first->next = NULL;
+    last = first;
+
+    for (i = 1; i < n; i++){
+        t = new Node;
+        t->data = A[i];
+        t->next = NULL;
+        last->next = t;
+        last = t;
+    }
+}
+
+void Delete(int pos){
+    Node *p ,*q;
+    int x;
+    if(pos == 0){
+        p = first;
+        first = first->next;
+        x = p->data;
+        delete p;
+    }
+    else{
+        p = first;
+        q = NULL;
+        for(int i=0;i<pos - 1; i++){
+            q = p;
+            p = p->next;
+            if(p == NULL) return; // Check if p is NULL
+        }
+        if(p){
+            q->next = p->next;
+            x = p->data;
+            delete p;
+        }
+    }
+}
+
+void display(Node* first) {
+    while (first!= nullptr) {
+        cout << first->data << " ";
+        first = first->next;
+    }
+    cout << "\n";
+}
+
+int main()
+{
+    int A[] = {3, 5, 7, 10, 25, 8, 32, 2};
+    create(A, 8);
+    int pos;
+    cout<<"Enter the Position that You Want :";
+    cin>>pos;
+    Delete(pos);
+    display(first);
+    
+    return 0;
+}
