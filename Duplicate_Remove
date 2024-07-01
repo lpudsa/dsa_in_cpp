@@ -1,0 +1,56 @@
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    struct Node *next;
+}*first = NULL;
+
+void create(int A[], int n) {
+    int i;
+    struct Node *t, *last;
+    first = new Node;
+    first->data = A[0];
+    first->next = NULL;
+    last = first;
+
+    for (i = 1; i < n; i++) {
+        t = new Node;
+        t->data = A[i];
+        t->next = NULL;
+        last->next = t;
+        last = t;
+    }
+}
+
+void DuplicateRemove(struct Node *p) {
+    struct Node *q = first;
+    struct Node *prev = NULL;
+
+    while (q != NULL) {
+        if (prev != NULL && prev->data == q->data) {
+            prev->next = q->next;
+            delete q;
+            q = prev->next;
+        } else {
+            prev = q;
+            q = q->next;
+        }
+    }
+}
+
+void display(Node* first) {
+    while (first != nullptr) {
+        cout << first->data << " ";
+        first = first->next;
+    }
+    cout << "\n";
+}
+
+int main() {
+    int A[] = {2, 8, 9, 9, 10, 12, 113};
+    create(A, 7);
+    DuplicateRemove(first);
+    display(first);
+    return 0;
+}
